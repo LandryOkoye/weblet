@@ -14,34 +14,54 @@ export const WalletCreate: React.FC<Props> = ({ onCreate, onImport, keypair }) =
 
   return (
     <div className="card">
-      <h2>1. Wallet Access</h2>
+      <h2 className="card-title">{keypair ? "Wallet Security" : "Wallet Access"}</h2>
+      
       {!keypair ? (
-        <div className="auth-actions">
-          <button onClick={onCreate}>Generate New Wallet</button>
-          <div className="import-row">
-            <input 
-              type="text" 
-              placeholder="Paste Private Key (Base58)"
-              value={secretInput}
-              onChange={(e) => setSecretInput(e.target.value)}
-            />
-            <button onClick={() => onImport(secretInput)}>Import</button>
+        <div className="auth-stack">
+          {/* Section 1: Generate */}
+          <div className="auth-section">
+            <button className="primary-btn" onClick={onCreate}>
+              Generate New Wallet
+            </button>
+            <p className="helper-text">Creates a new keypair in memory.</p>
+          </div>
+
+          <div className="divider"><span>OR</span></div>
+
+          {/* Section 2: Import */}
+          <div className="auth-section">
+            <label className="input-label">Import Private Key</label>
+            <div className="import-group">
+              <input 
+                type="password" 
+                className="modern-input"
+                placeholder="Paste Base58 string..."
+                value={secretInput}
+                onChange={(e) => setSecretInput(e.target.value)}
+              />
+              <button className="secondary-btn" onClick={() => onImport(secretInput)}>
+                Import
+              </button>
+            </div>
           </div>
         </div>
       ) : (
         <div className="wallet-details">
-          <p className="success-text">✅ Wallet Loaded</p>
+          <div className="status-badge success">✅ Wallet Active</div>
           <div className="warning-box">
-            <p><strong>⚠️ Private Key (Do not share):</strong></p>
-            <button onClick={() => setShowSecret(!showSecret)}>
-              {showSecret ? 'Hide' : 'Reveal'} Key
+            <p className="warning-title">⚠️ Security Warning</p>
+            <p className="helper-text">Anyone with this key can steal your funds. Never share it.</p>
+            
+            <button className="reveal-btn" onClick={() => setShowSecret(!showSecret)}>
+              {showSecret ? 'Hide Private Key' : 'Reveal Private Key'}
             </button>
+
             {showSecret && (
-              <code className="secret-key">
-                {bs58.encode(keypair.secretKey)}
-              </code>
+              <div className="secret-display">
+                <code>{bs58.encode(keypair.secretKey)}</code>
+              </div>
             )}
-          </div>
+          </div> 
         </div>
       )}
     </div>

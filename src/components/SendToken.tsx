@@ -65,27 +65,43 @@ export const SendToken: React.FC<Props> = ({ keypair, network }) => {
 
   return (
     <div className="card">
-      <h2>3. Send SPL Tokens</h2>
-      <div className="form-group">
-        <label>Recipient Address</label>
-        <input value={recipient} onChange={e => setRecipient(e.target.value)} placeholder="Solana Address" />
-      </div>
-      <div className="form-group">
-        <label>Token Mint Address</label>
-        <input value={mint} onChange={e => setMint(e.target.value)} placeholder="Token Mint Address" />
-      </div>
-      <div className="form-group">
-        <label>Amount</label>
-        <input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00" />
-      </div>
-      
-      <button onClick={handleSend} className="primary-btn">Send Transaction</button>
-      
-      {status && (
-        <div className={`status-message ${isError ? 'error' : 'success'}`}>
-          {status}
+      <h2 className="card-title">3. Send SPL Tokens</h2>
+      <div className="input-stack">
+        <div className="form-group">
+          <label className="input-label">Recipient Address</label>
+          <input 
+            className="modern-input"
+            value={recipient} 
+            onChange={e => setRecipient(e.target.value)} 
+            placeholder="Solana Address" 
+          />
         </div>
-      )}
+        
+        <div className="form-group">
+          <label className="input-label">Token Mint Address</label>
+          <input 
+            className="modern-input"
+            value={mint} 
+            onChange={e => setMint(e.target.value)} 
+            placeholder="Token Mint Address" 
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="input-label">Amount</label>
+          <input 
+            type="number" 
+            className="modern-input"
+            value={amount} 
+            onChange={e => setAmount(e.target.value)} 
+            placeholder="0.00" 
+          />
+        </div>
+        
+        <button onClick={handleSend} className="primary-btn">
+          Send Transaction
+        </button>
+      </div>
     </div>
   );
 };

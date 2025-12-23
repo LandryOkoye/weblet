@@ -6,6 +6,15 @@ interface Props {
 
 export const ReceiveToken: React.FC<Props> = ({ publicKey }) => {
   if (!publicKey) return null;
+  const [copied, setCopied] = React.useState(false);
+
+const handleCopy = () => {
+  if (publicKey) {
+    navigator.clipboard.writeText(publicKey);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+};
 
   return (
     <div className="card">
@@ -13,10 +22,11 @@ export const ReceiveToken: React.FC<Props> = ({ publicKey }) => {
       <p>Your Public Address:</p>
       <div className="address-container">
         <code>{publicKey}</code>
-        <button onClick={() => navigator.clipboard.writeText(publicKey)}>
-          Copy
+        <button onClick={handleCopy}>
+            {copied ? 'Copied!' : 'Copy'}
         </button>
       </div>
     </div>
+
   );
 };
